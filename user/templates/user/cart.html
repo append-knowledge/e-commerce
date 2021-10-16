@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+{%extends 'user/index.html'%}
+{%block body_block%}
+
+<div class="row">
+    <div class="col-1"></div>
+    <div class="col-10">
+        <table class="table">
+            {%csrf_token%}
+
+          <tr>
+              <td>product name</td>
+              <td>delivery address</td>
+              <td>status</td>
+              <td>action</td>
+          </tr>
+            <tr>
+                {%for order in orders%}
+                <td>{{order.products}}</td>
+                <td>{{order.address}}</td>
+                <td>{{order.status}}</td>
+                {%if order.status.cancel%}
+                <td>
+
+                </td>
+                {%else%}
+                <td><a href="" class="btn btn-danger">cancel</a></td>
+                {%endif%}
+
+
+            </tr>
+            {%endfor%}
+        </table>
+    </div>
+    <div class="col-1"></div>
+</div>
+
+{%endblock%}

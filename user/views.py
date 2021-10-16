@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from django.views.generic import TemplateView,CreateView,ListView,UpdateView
 from .models import MyUser,Order,Product
-from .forms import SignInForm,SignUpForm
+from .forms import SignInForm,SignUpForm,Order_form
 from django.contrib.auth import authenticate,login,logout
 from django.urls import reverse_lazy
 # Create your views here.
@@ -40,5 +40,29 @@ class SignInViews(TemplateView):
             return redirect('signup')
 
 
-class Home(TemplateView):
+class Home(ListView):
     template_name = 'user/home.html'
+    model=Product
+    context_object_name = 'content'
+def signout(request,*args,**kwargs):
+        logout(request)
+        return redirect('login')
+
+
+class CreateOrderViews(CreateView):
+    model = Order
+    form_class =Order_form
+    template_name = 'user/order.html'
+    success_url = reverse_lazy('cart')
+
+class Cart(ListView):
+    model=Order
+    template_name = 'user/cart.html'
+    context_object_name = 'orders'
+
+def remove(request,id,*args,**kwargs):
+    order=Order.objects.get(id=id)
+    order.status='cancel'
+    order.save()
+    return redirect('cart')
+

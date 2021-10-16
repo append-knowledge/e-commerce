@@ -1,12 +1,36 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{%extends 'user/index.html'%}
+{%block body_block%}
 
 
-<h1>hii user</h1>
-</body>
-</html>
+
+    <div class="row">
+        {% for con in content %}
+
+        <div class="col-4">
+            <div class="card" style="width: 18rem;">
+
+                <ul class="list-group list-group-flush">
+
+                    <li class="list-group-item">
+                        <img src="{{con.image}}" class="card-img-top" style="height:200px;" alt="">
+                    </li>
+                    <li class="list-group-item">:{{con.Product_name}}</li>
+
+
+                    <li class="list-group-item">{{con.price}}</li>
+                    <li class="list-group-item">{{con.stock}}</li>
+                    <li class="list-group-item">
+
+
+                        <a href="{%url 'makeorder'%}" class="btn btn-success ">ORDER</a>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+
+
+        {% endfor %}
+    </div>
+{%endblock%}
